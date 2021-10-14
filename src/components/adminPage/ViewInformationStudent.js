@@ -12,6 +12,8 @@ import {
 import { getListStudent } from "../../services/api/api";
 import { ListItem, Avatar } from "react-native-elements";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const { width, height } = Dimensions.get("window");
 var e;
 
@@ -24,6 +26,8 @@ class ViewInformationStudent extends Component {
     };
   }
   componentDidMount = async () => {
+    const token = await AsyncStorage.getItem("TOKEN");
+    console.log(token);
     const list = await getListStudent();
     this.setState({
       listStudent: list,

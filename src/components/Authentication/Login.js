@@ -12,21 +12,25 @@ import {
 } from "react-native";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from '@expo/vector-icons'; 
 
+import { login } from "../../services/api/api";
+
 const { width: WIDTH } = Dimensions.get("window");
-var e;
 
 class Login extends Component {
   constructor(props) {
     super(props);
-    e = this;
     this.state = {
       showPass: true,
       press: false,
+      loginquery:null,
+      password:null,
+      data:""
     };
   }
   showPass = () => {
@@ -36,6 +40,21 @@ class Login extends Component {
       this.setState({ showPass: true, press: false });
     }
   };
+  onSubmit = async() => {
+    let data = {
+      email: this.state.loginquery,
+      password: this.state.password
+    };
+    // console.log(data);
+    const list = await login(data);
+    this.setState({
+      data:list
+    })
+    if(list.success==true){
+      alert("Login Success");
+      this.props.navigation.navigate("Main");
+    }
+  }
   render() {
     return (
       <TouchableWithoutFeedback
@@ -77,6 +96,8 @@ class Login extends Component {
                     placeholder={"Email"}
                     placeholderTextColor={"grey"}
                     underlineColorAndroid="transparent"
+                    onChangeText={(loginquery)=>this.setState({loginquery:loginquery})}
+                    value={this.state.loginquery}
                   />
                   <View style={styles.inputIcon}>
                     <MaterialIcons
@@ -106,6 +127,8 @@ class Login extends Component {
                     placeholderTextColor={"grey"}
                     underlineColorAndroid="transparent"
                     secureTextEntry={this.state.showPass}
+                    onChangeText={(password)=>this.setState({password:password})}
+                    value={this.state.password}
                   ></TextInput>
                   <View style={styles.inputIcon}>
                     <FontAwesome5 name="lock" size={22} color="grey" />
@@ -117,11 +140,14 @@ class Login extends Component {
                     <Ionicons name={this.state.press == false ? "eye-off" : "eye"} size={24} color="grey" />
                   </TouchableOpacity>
                 </View>
+                <View style={{alignItems:'center',paddingTop:5}}>
+                  <Text style={{color:'red'}}>{this.state.data.success==false?<>Password or email error!!!</>:null}</Text>
+                </View>
                 <TouchableOpacity style={{marginTop:15,alignItems:'flex-end',paddingRight: 30}}>
                     <Text>Forgot Password?</Text>
                 </TouchableOpacity>
                 <View style={{ paddingLeft: 25 }}>
-                  <TouchableOpacity style={styles.btnLogin}>
+                  <TouchableOpacity onPress={()=>this.onSubmit()} style={styles.btnLogin}>
                     <Text style={styles.textlogin}>LOGIN</Text>
                   </TouchableOpacity>
                 </View>

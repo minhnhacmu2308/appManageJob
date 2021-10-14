@@ -25,6 +25,7 @@ import ViewVote from "../adminPage/ViewVote";
 import MainViewAccount from "../adminPage/MainViewAccount";
 import MainViewPost from "../adminPage/MainViewPost";
 import Menu from "../Menu/Menu";
+import DetailPostTask from "../adminPage/DetailPostTask";
 
 var e;
 const HomeStack = createStackNavigator();
@@ -181,6 +182,11 @@ const PostStackScreen = ({ navigation }) => {
       <HomeStack.Screen
         name="ListPostUnActive"
         component={ApprovePostTask}
+        options={{ headerShown: false }}
+      />
+      <HomeStack.Screen
+        name="DetailPostTask"
+        component={DetailPostTask}
         options={{ headerShown: false }}
       />
     </HomeStack.Navigator>
