@@ -20,6 +20,7 @@ class DetailCompany extends Component {
     super(props);
     this.state = {
       info: {},
+      rate: [],
     };
   }
 
@@ -29,7 +30,14 @@ class DetailCompany extends Component {
     this.setState({
       info: information,
     });
-    console.log(this.state.info.list_rate.length);
+    const arr = [];
+    for (let i = 0; i < information.list_rate.length; i++) {
+      arr.push(information.list_rate[i]);
+    }
+    this.setState({
+      rate: arr,
+    });
+    console.log(this.state.rate);
   };
   left = () => {
     return (
@@ -143,19 +151,28 @@ class DetailCompany extends Component {
               </Text>
               <Text style={{ color: "red" }}>*</Text>
             </View>
-            {/* {this.state.info.list_rate.map((a, index) => (
-              <Text
-                key={index}
-                style={{
-                  lineHeight: 25,
-                  marginLeft: 10,
-                  marginTop: 10,
-                  fontSize: 18,
-                }}
-              >
-                + {a}
-              </Text>
-            ))} */}
+            {this.state.rate.length === 0 ? (
+              <>
+                <Text>Chưa có đánh giá nào</Text>
+              </>
+            ) : (
+              <>
+                {this.state.rate.map((a, index) => (
+                  <Text
+                    key={index}
+                    style={{
+                      lineHeight: 25,
+                      marginLeft: 10,
+                      marginTop: 10,
+                      marginLeft: 20,
+                      fontSize: 18,
+                    }}
+                  >
+                    + {a.rater_comment}
+                  </Text>
+                ))}
+              </>
+            )}
           </View>
         </ScrollView>
       </View>

@@ -1,29 +1,29 @@
 export const list = [
   {
     title: "Thông báo",
-    icon: "av-timer",
+    icon: "notifications",
   },
   {
     title: "Danh sách quan tâm",
-    icon: "flight-takeoff",
+    icon: "list",
   },
   {
     title: "System Setting",
-    icon: "flight-takeoff",
+    icon: "settings",
   },
   {
     title: "ChangePassword",
-    icon: "flight-takeoff",
+    icon: "sync-alt",
   },
 ];
 export const list1 = [
   {
     title: "Mua Vip",
-    icon: "av-timer",
+    icon: "shopping-cart",
   },
   {
     title: "Tiết kiệm 3G,4G",
-    icon: "flight-takeoff",
+    icon: "share",
   },
   {
     title: "Nhận Code Vip",

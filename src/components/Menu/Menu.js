@@ -29,8 +29,6 @@ import { list1, list } from "../../../db/db.js";
 import * as Permissions from "expo-permissions";
 import * as ImagePicker from "expo-image-picker";
 
-import * as Location from "expo-location";
-
 import jwt_decode from "jwt-decode";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -92,7 +90,7 @@ class Menu extends Component {
     );
   };
   openImagePickerAsync = async () => {
-    let permissionResult = await Location.requestForegroundPermissionsAsync();
+    let permissionResult = await Permissions.askAsync(Permissions.CAMERA_ROLL);
     if (permissionResult === "granted") {
       return;
     }
@@ -111,8 +109,10 @@ class Menu extends Component {
           mimetype: "image/jpg",
         };
         const data = new FormData();
+        console.log(data);
         data.append("secret_key", this.state.secret_key);
         data.append("image", fileToUpload);
+        console.log(data);
         const response = await UploadAvatar(data);
         this.setState({ image: response });
       }

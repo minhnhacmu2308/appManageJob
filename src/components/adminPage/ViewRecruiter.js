@@ -8,10 +8,12 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
+  Modal,
+  Button,
 } from "react-native";
 import { getListNtdActive } from "../../services/api/api";
 import { ListItem, Avatar } from "react-native-elements";
-import { comfirmAccountNtd } from "../../services/api/api";
+import { comfirmAccountNtd, deleteAccount } from "../../services/api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 const { width, height } = Dimensions.get("window");
 var e;
@@ -23,6 +25,8 @@ class ViewRecruiter extends Component {
     this.state = {
       listNtd: [],
       token: null,
+      visible: false,
+      _id: null,
     };
   }
   componentDidMount = async () => {
@@ -66,9 +70,73 @@ class ViewRecruiter extends Component {
       });
     }
   };
+
+  deleteAccountNtd = async () => {
+    console.log(this.state._id);
+    let data = {
+      secret_key: this.state.token,
+      idUser: this.state._id,
+    };
+    const result = await deleteAccount(data);
+    if (result.status == true) {
+      alert("Delete success!");
+      const list = await getListNtdActive();
+      this.setState({
+        listNtd: list,
+      });
+    }
+    console.log(result);
+  };
   render() {
     return (
       <View>
+        <Modal transparent={true} visible={this.state.visible}>
+          <View
+            style={{
+              flexDirection: "column",
+              flex: 1,
+              backgroundColor: "#000000aa",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <View style={styles.enterInformation}>
+              <View style={{ marginTop: 10, marginLeft: 5 }}>
+                <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                  Do you want delete?
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  margin: 20,
+                  marginLeft: 60,
+                  marginRight: 60,
+                  zIndex: 1,
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ marginRight: 20 }}>
+                  <Button
+                    title="Cancel"
+                    color="red"
+                    style={{ fontSize: 18 }}
+                    onPress={() => this.setState({ visible: false })}
+                  />
+                </View>
+                <Button
+                  title="Delete"
+                  color="red"
+                  style={{ fontSize: 18 }}
+                  onPress={() => {
+                    this.deleteAccountNtd();
+                    this.setState({ visible: false });
+                  }}
+                />
+              </View>
+            </View>
+          </View>
+        </Modal>
         <View style={{ alignItems: "center" }}>
           {this.state.listNtd.length == 0 ? null : (
             <TouchableOpacity
@@ -131,7 +199,29 @@ class ViewRecruiter extends Component {
                       Confirm
                     </Text>
                   </TouchableOpacity>
-                ) : null}
+                ) : (
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: "red",
+                      height: 25,
+                      borderRadius: 5,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: 50,
+                    }}
+                    onPress={() => this.setState({ _id: l._id, visible: true })}
+                  >
+                    <Text
+                      style={{
+                        color: "white",
+                        fontSize: 10,
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Delete
+                    </Text>
+                  </TouchableOpacity>
+                )}
 
                 <ListItem.Chevron />
               </ListItem>
@@ -147,5 +237,23 @@ export default ViewRecruiter;
 const styles = StyleSheet.create({
   ratingText: {
     color: "grey",
+  },
+  enterInformation: {
+    backgroundColor: "#FFFF",
+    width: "80%",
+    height: height * 0.2,
+    margin: "10%",
+    padding: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 12,
+    },
+    shadowOpacity: 0.58,
+    shadowRadius: 16.0,
+    elevation: 24,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

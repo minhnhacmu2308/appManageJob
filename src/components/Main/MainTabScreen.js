@@ -26,6 +26,7 @@ import MainViewAccount from "../adminPage/MainViewAccount";
 import MainViewPost from "../adminPage/MainViewPost";
 import Menu from "../Menu/Menu";
 import DetailPostTask from "../adminPage/DetailPostTask";
+import HomeCreate from "../adminPage/HomeCreate";
 import { getListNtdUnActive } from "../../services/api/api";
 import { getListPostUnActive } from "../../services/api/api";
 
@@ -222,6 +223,11 @@ const CreateStackScreen = ({ navigation }) => {
         },
       }}
     >
+      <HomeStack.Screen
+        name="HomeCreate"
+        component={HomeCreate}
+        options={{ headerShown: false }}
+      />
       <HomeStack.Screen
         name="ApproveAccount"
         component={ApproveAccount}

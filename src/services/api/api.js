@@ -1,6 +1,6 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-const URL = "http:192.168.1.8:3000";
+const URL = "http:192.168.1.7:3000";
 
 export const getListStudent = async () => {
   const response = await axios.get(`${URL}/user/get-list-student`);
@@ -80,6 +80,18 @@ export const comfirmPostForNtd = async (data) => {
 
 export const comfirmAccountNtd = async (data) => {
   const response = await axios.post(`${URL}/user/confirm-account`, data);
+  const result = response.data;
+  return result;
+};
+
+export const createAccountAdmin = async (data) => {
+  const response = await axios.post(`${URL}/user/register/admin`, data);
+  const result = response.data;
+  return result;
+};
+
+export const deleteAccount = async (data) => {
+  const response = await axios.post(`${URL}/user/delete-account`, data);
   const result = response.data;
   return result;
 };
