@@ -8,11 +8,11 @@ export const list = [
     icon: "flight-takeoff",
   },
   {
-    title: "Danh sách chặn",
+    title: "System Setting",
     icon: "flight-takeoff",
   },
   {
-    title: "Danh sách tạm ẩn",
+    title: "ChangePassword",
     icon: "flight-takeoff",
   },
 ];

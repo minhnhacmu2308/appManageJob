@@ -74,10 +74,10 @@ class ViewVote extends Component {
         />
         <ScrollView showsVerticalScrollIndicator={false}>
           {this.state.listRate.map((l, i) => (
-            <View>
-              {l.list_rate.map((list) => {
+            <View key={l._id}>
+              {l.list_rate.map((list, index) => {
                 return (
-                  <ListItem key={i} bottomDivider>
+                  <ListItem key={index} bottomDivider>
                     <Avatar
                       source={{
                         uri: "https://previews.123rf.com/images/vectorkif/vectorkif1609/vectorkif160900070/65327593-student-girl-flat-style-beautiful-vector-icon-avatar.jpg",

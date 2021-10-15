@@ -12,11 +12,11 @@ import {
 } from "react-native";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-import { Ionicons } from '@expo/vector-icons'; 
+import { Ionicons } from "@expo/vector-icons";
 
 import { login } from "../../services/api/api";
 
@@ -28,9 +28,9 @@ class Login extends Component {
     this.state = {
       showPass: true,
       press: false,
-      loginquery:null,
-      password:null,
-      data:""
+      loginquery: null,
+      password: null,
+      data: "",
     };
   }
   showPass = () => {
@@ -40,21 +40,20 @@ class Login extends Component {
       this.setState({ showPass: true, press: false });
     }
   };
-  onSubmit = async() => {
+  onSubmit = async () => {
     let data = {
       email: this.state.loginquery,
-      password: this.state.password
+      password: this.state.password,
     };
     // console.log(data);
     const list = await login(data);
     this.setState({
-      data:list
-    })
-    if(list.success==true){
-      alert("Login Success");
+      data: list,
+    });
+    if (list.success == true) {
       this.props.navigation.navigate("Main");
     }
-  }
+  };
   render() {
     return (
       <TouchableWithoutFeedback
@@ -96,7 +95,9 @@ class Login extends Component {
                     placeholder={"Email"}
                     placeholderTextColor={"grey"}
                     underlineColorAndroid="transparent"
-                    onChangeText={(loginquery)=>this.setState({loginquery:loginquery})}
+                    onChangeText={(loginquery) =>
+                      this.setState({ loginquery: loginquery })
+                    }
                     value={this.state.loginquery}
                   />
                   <View style={styles.inputIcon}>
@@ -127,7 +128,9 @@ class Login extends Component {
                     placeholderTextColor={"grey"}
                     underlineColorAndroid="transparent"
                     secureTextEntry={this.state.showPass}
-                    onChangeText={(password)=>this.setState({password:password})}
+                    onChangeText={(password) =>
+                      this.setState({ password: password })
+                    }
                     value={this.state.password}
                   ></TextInput>
                   <View style={styles.inputIcon}>
@@ -137,17 +140,34 @@ class Login extends Component {
                     style={styles.btnEye}
                     onPress={this.showPass.bind(this)}
                   >
-                    <Ionicons name={this.state.press == false ? "eye-off" : "eye"} size={24} color="grey" />
+                    <Ionicons
+                      name={this.state.press == false ? "eye-off" : "eye"}
+                      size={24}
+                      color="grey"
+                    />
                   </TouchableOpacity>
                 </View>
-                <View style={{alignItems:'center',paddingTop:5}}>
-                  <Text style={{color:'red'}}>{this.state.data.success==false?<>Password or email error!!!</>:null}</Text>
+                <View style={{ alignItems: "center", paddingTop: 5 }}>
+                  <Text style={{ color: "red" }}>
+                    {this.state.data.success == false ? (
+                      <>Password or email error!!!</>
+                    ) : null}
+                  </Text>
                 </View>
-                <TouchableOpacity style={{marginTop:15,alignItems:'flex-end',paddingRight: 30}}>
-                    <Text>Forgot Password?</Text>
+                <TouchableOpacity
+                  style={{
+                    marginTop: 15,
+                    alignItems: "flex-end",
+                    paddingRight: 30,
+                  }}
+                >
+                  <Text>Forgot Password?</Text>
                 </TouchableOpacity>
                 <View style={{ paddingLeft: 25 }}>
-                  <TouchableOpacity onPress={()=>this.onSubmit()} style={styles.btnLogin}>
+                  <TouchableOpacity
+                    onPress={() => this.onSubmit()}
+                    style={styles.btnLogin}
+                  >
                     <Text style={styles.textlogin}>LOGIN</Text>
                   </TouchableOpacity>
                 </View>

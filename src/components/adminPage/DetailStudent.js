@@ -43,7 +43,7 @@ class DetailStudent extends Component {
   };
   render() {
     return (
-      <View>
+      <View style={{ backgroundColor: "white" }}>
         <Header
           centerComponent={{
             text: "CV Student",
@@ -53,126 +53,309 @@ class DetailStudent extends Component {
           backgroundColor="#ffff"
         />
         <ScrollView>
-          <View
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              paddingRight: 10,
-              flex: 1,
-              marginBottom: 80,
-              backgroundColor: "#ffff",
-            }}
-          >
-            <View style={{ marginTop: 10 }}>
-              <Image
-                source={{
-                  uri:
-                    this.state.info.gender === "male"
-                      ? "https://previews.123rf.com/images/vectorkif/vectorkif1609/vectorkif160900070/65327593-student-girl-flat-style-beautiful-vector-icon-avatar.jpg"
-                      : "https://c.neh.tw/thumb/f/720/m2H7H7K9m2Z5G6i8.jpg",
+          <View>
+            <View
+              style={{
+                height: 200,
+                width: "100%",
+                backgroundColor: "red",
+                borderBottomRightRadius: 60,
+                borderBottomLeftRadius: 60,
+              }}
+            ></View>
+            <View style={{ paddingLeft: 15, paddingRight: 15, marginTop: -80 }}>
+              <View
+                style={{
+                  shadowOffset: { width: 0, height: 3 },
+                  shadowOpacity: 0.2,
+                  marginHorizontal: 16,
+                  marginVertical: 10,
+                  elevation: 3,
+                  borderTopColor: "#71B7B7",
+                  backgroundColor: "#EEEEEE",
+                  height: 600,
+                  borderTopRightRadius: 50,
+                  borderTopLeftRadius: 50,
+                  alignItems: "center",
                 }}
-                style={{ width: 200, height: 200, borderRadius: 100 }}
-                PlaceholderContent={<ActivityIndicator />}
-              />
+              >
+                <View
+                  style={{
+                    width: 120,
+                    height: 120,
+                    borderRadius: 100,
+                    marginTop: -60,
+                  }}
+                >
+                  <Image
+                    source={{
+                      uri:
+                        this.state.info.gender === "male"
+                          ? "https://previews.123rf.com/images/vectorkif/vectorkif1609/vectorkif160900070/65327593-student-girl-flat-style-beautiful-vector-icon-avatar.jpg"
+                          : "https://c.neh.tw/thumb/f/720/m2H7H7K9m2Z5G6i8.jpg",
+                    }}
+                    style={{ width: 120, height: 120, borderRadius: 100 }}
+                    PlaceholderContent={<ActivityIndicator />}
+                  />
+                </View>
+                <ScrollView>
+                  <View style={{ width: "100%", marginBottom: 10 }}>
+                    <View
+                      style={{
+                        width: "100%",
+                        flexDirection: "row",
+                        padding: 15,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          width: "50%",
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        Full name:
+                      </Text>
+                      <Text style={{ width: "50%", fontSize: 16 }}>
+                        {" "}
+                        {this.state.info.fullName}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        flexDirection: "row",
+                        padding: 15,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          width: "50%",
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        Ngày sinh:
+                      </Text>
+                      <Text style={{ width: "50%", fontSize: 16 }}>
+                        {" "}
+                        {this.state.info.birthday}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        flexDirection: "row",
+                        padding: 15,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          width: "50%",
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        Giới tính:
+                      </Text>
+                      <Text style={{ width: "50%", fontSize: 16 }}>
+                        {" "}
+                        {this.state.info.gender}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        flexDirection: "row",
+                        padding: 15,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          width: "50%",
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        Major:
+                      </Text>
+                      <Text style={{ width: "50%", fontSize: 16 }}>
+                        {" "}
+                        {this.state.info.major}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        flexDirection: "row",
+                        padding: 15,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          width: "50%",
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        Skills:
+                      </Text>
+                      <Text style={{ width: "50%", fontSize: 16 }}>
+                        {" "}
+                        {this.state.info.skills}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        flexDirection: "row",
+                        padding: 15,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          width: "50%",
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        Certification:
+                      </Text>
+                      <Text style={{ width: "50%", fontSize: 16 }}>
+                        {" "}
+                        {this.state.info.certification}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        flexDirection: "row",
+                        padding: 15,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          width: "50%",
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        Title job:
+                      </Text>
+                      <Text style={{ width: "50%", fontSize: 16 }}>
+                        {" "}
+                        {this.state.info.title_job}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        flexDirection: "row",
+                        padding: 15,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          width: "50%",
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        Phone number:
+                      </Text>
+                      <Text style={{ width: "50%", fontSize: 16 }}>
+                        {" "}
+                        {this.state.info.phonenumber}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        flexDirection: "row",
+                        padding: 15,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          width: "50%",
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        Quê quán:
+                      </Text>
+                      <Text style={{ width: "50%", fontSize: 16 }}>
+                        {" "}
+                        {this.state.info.address}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        flexDirection: "row",
+                        padding: 15,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          width: "50%",
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        Type of student:
+                      </Text>
+                      <Text style={{ width: "50%", fontSize: 16 }}>
+                        {" "}
+                        {this.state.info.type_of_student}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        flexDirection: "row",
+                        padding: 15,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          width: "50%",
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        Objective:
+                      </Text>
+                      <Text style={{ width: "50%", fontSize: 16 }}>
+                        {" "}
+                        {this.state.info.objective}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        flexDirection: "row",
+                        padding: 15,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          width: "50%",
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        Tên trường:
+                      </Text>
+                      <Text style={{ width: "50%", fontSize: 16 }}>
+                        {" "}
+                        {this.state.info.name_of_school}
+                      </Text>
+                    </View>
+                  </View>
+                </ScrollView>
+              </View>
             </View>
-            <Text style={{ fontSize: 30, fontWeight: "bold", marginTop: 10 }}>
-              {this.state.info.fullName}
-            </Text>
-            <Text style={{ fontSize: 20 }}>
-              {" "}
-              {this.state.info.name_of_school}
-            </Text>
-            <View
-              style={{ flexDirection: "row", marginTop: 20, marginBottom: 20 }}
-            >
-              <Text style={styles.fonttext}>Ngày sinh :</Text>
-              <Text style={styles.fonttextinfor}>
-                {" "}
-                {this.state.info.birthday}
-              </Text>
-            </View>
-            <View
-              style={{ flexDirection: "row", marginTop: 20, marginBottom: 20 }}
-            >
-              <Text style={styles.fonttext}>Giới tính :</Text>
-              <Text style={styles.fonttextinfor}>
-                {" "}
-                {this.state.info.gender}
-              </Text>
-            </View>
-            <View
-              style={{ flexDirection: "row", marginTop: 20, marginBottom: 20 }}
-            >
-              <Text style={styles.fonttext}>Major :</Text>
-              <Text style={styles.fonttextinfor}> {this.state.info.major}</Text>
-            </View>
-            <View
-              style={{ flexDirection: "row", marginTop: 20, marginBottom: 20 }}
-            >
-              <Text style={styles.fonttext}>Skills:</Text>
-              <Text style={styles.fonttextinfor}>
-                {" "}
-                {this.state.info.skills}
-              </Text>
-            </View>
-            <View
-              style={{ flexDirection: "row", marginTop: 20, marginBottom: 20 }}
-            >
-              <Text style={styles.fonttext}>Certification:</Text>
-              <Text style={styles.fonttextinfor}>
-                {this.state.info.certification}
-              </Text>
-            </View>
-            <View
-              style={{ flexDirection: "row", marginTop: 20, marginBottom: 20 }}
-            >
-              <Text style={styles.fonttext}>Title job:</Text>
-              <Text style={styles.fonttextinfor}>
-                {this.state.info.phonenumber}
-              </Text>
-            </View>
-            <View
-              style={{ flexDirection: "row", marginTop: 20, marginBottom: 20 }}
-            >
-              <Text style={styles.fonttext}>Số điện thoại:</Text>
-              <Text style={styles.fonttextinfor}>
-                {" "}
-                {this.state.info.birthday}
-              </Text>
-            </View>
-            <View
-              style={{ flexDirection: "row", marginTop: 20, marginBottom: 20 }}
-            >
-              <Text style={styles.fonttext}>Quê quán:</Text>
-              <Text style={styles.fonttextinfor}>
-                {" "}
-                {this.state.info.address}
-              </Text>
-            </View>
-            <View
-              style={{ flexDirection: "row", marginTop: 20, marginBottom: 20 }}
-            >
-              <Text style={styles.fonttext}>Type of student:</Text>
-              <Text style={styles.fonttextinfor}>
-                {" "}
-                {this.state.info.type_of_student}
-              </Text>
-            </View>
-            <View
-              style={{ flexDirection: "row", marginTop: 20, marginBottom: 20 }}
-            >
-              <Text style={styles.fonttext}>Objective:</Text>
-              <Text style={styles.fonttextinfor}>
-                {" "}
-                {this.state.info.objective}
-              </Text>
-            </View>
-            {/* <TouchableOpacity
-              onPress={() => this.props.navigation.navigate("Login")}
-              style={styles.btnLogin}
-            >
-              <Text style={styles.textlogin}>LOGOUT</Text>
-            </TouchableOpacity> */}
           </View>
         </ScrollView>
       </View>
@@ -205,7 +388,8 @@ const styles = StyleSheet.create({
   },
   fonttextinfor: {
     left: 50,
-    flex: 2,
+    flex: 1,
+    borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
     fontSize: 17,

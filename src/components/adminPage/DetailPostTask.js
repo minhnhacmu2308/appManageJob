@@ -46,7 +46,7 @@ class DetailPostTask extends Component {
   };
   render() {
     return (
-      <View style={{backgroundColor:'white'}}>
+      <View style={{ backgroundColor: "white", flex: 1 }}>
         <Header
           centerComponent={{
             text: "Detail Post Task",
@@ -58,65 +58,85 @@ class DetailPostTask extends Component {
         <ScrollView>
           <View
             style={{
-              justifyContent: "center",
-              alignItems: "center",
               paddingRight: 10,
               flex: 1,
               marginBottom: 130,
               backgroundColor: "white",
             }}
           >
-            <View style={{ marginTop: 10 }}>
+            <View
+              style={{
+                marginTop: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <Image
                 source={{
-                  uri:"https://previews.123rf.com/images/vectorkif/vectorkif1609/vectorkif160900070/65327593-student-girl-flat-style-beautiful-vector-icon-avatar.jpg"
+                  uri: "https://kos.edu.vn/wp-content/uploads/2020/03/jobs-hiring-help-wanter.jpg",
                 }}
                 style={{ width: 200, height: 200, borderRadius: 100 }}
                 PlaceholderContent={<ActivityIndicator />}
               />
-            </View>
-            <Text style={{ fontSize: 30, fontWeight: "bold", marginTop: 10 }}>
-              {this.state.info.name_company}
-            </Text>
-            <Text style={{ fontSize: 20 }}>
-              {" "}
-              {this.state.info.name_job}
-            </Text>
-            <View
-              style={{ flexDirection: "row", marginTop: 20, marginBottom: 20 }}
-            >
-              <Text style={styles.fonttext}>Description:</Text>
-              <Text style={styles.fonttextinfor}>
-                {this.state.info.task_description}
+              <Text style={{ fontSize: 30, fontWeight: "bold", marginTop: 10 }}>
+                {this.state.info.name_company}
               </Text>
+              <Text style={{ fontSize: 20 }}> {this.state.info.name_job}</Text>
             </View>
-            <View
-              style={{ flexDirection: "row", marginTop: 20, marginBottom: 20 }}
-            >
-              <Text style={styles.fonttext}>Benefits:</Text>
-              <Text style={styles.fonttextinfor}>
-                {" "}
-                {this.state.info.benefits_enjoyed}
-              </Text>
+            <View style={{ padding: 10 }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginTop: 20,
+                  marginBottom: 20,
+                }}
+              >
+                <Text style={styles.fonttext}>Description:</Text>
+                <Text style={styles.fonttextinfor}>
+                  {this.state.info.task_description}
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginTop: 20,
+                  marginBottom: 20,
+                }}
+              >
+                <Text style={styles.fonttext}>Benefits:</Text>
+                <Text style={styles.fonttextinfor}>
+                  {" "}
+                  {this.state.info.benefits_enjoyed}
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginTop: 20,
+                  marginBottom: 20,
+                }}
+              >
+                <Text style={styles.fonttext}>Location:</Text>
+                <Text style={styles.fonttextinfor}>
+                  {" "}
+                  {this.state.info.location}
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginTop: 20,
+                  marginBottom: 20,
+                }}
+              >
+                <Text style={styles.fonttext}>Ngày hết hạn:</Text>
+                <Text style={styles.fonttextinfor}>
+                  {" "}
+                  {this.state.info.expires}
+                </Text>
+              </View>
             </View>
-            <View
-              style={{ flexDirection: "row", marginTop: 20, marginBottom: 20 }}
-            >
-              <Text style={styles.fonttext}>Location:</Text>
-              <Text style={styles.fonttextinfor}>
-                {" "}
-                {this.state.info.location}
-              </Text>
-            </View>
-            <View
-              style={{ flexDirection: "row", marginTop: 20, marginBottom: 20 }}
-            >
-              <Text style={styles.fonttext}>Ngày hết hạn:</Text>
-              <Text style={styles.fonttextinfor}>
-                {" "}
-                {this.state.info.expires}
-              </Text>
-            </View>
+
             {/* <TouchableOpacity
               onPress={() => this.props.navigation.navigate("Login")}
               style={styles.btnLogin}

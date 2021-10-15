@@ -29,6 +29,7 @@ class DetailCompany extends Component {
     this.setState({
       info: information,
     });
+    console.log(this.state.info.list_rate.length);
   };
   left = () => {
     return (
@@ -135,6 +136,7 @@ class DetailCompany extends Component {
                 + {this.state.info.address}
               </Text>
             </View>
+
             <View style={{ flexDirection: "row", padding: 10, marginTop: 10 }}>
               <Text style={{ fontWeight: "bold", fontSize: 20 }}>
                 Đánh giá:

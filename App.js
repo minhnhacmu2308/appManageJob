@@ -11,6 +11,7 @@ import { Provider } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Login from "./src/components/Authentication/Login";
+import LoadingPage from "./src/components/Authentication/LoadingPage";
 import MainTabScreen from "./src/components/Main/MainTabScreen";
 // import myReducer from './src/redux/reducers/index';
 
@@ -27,41 +28,27 @@ export default class App extends React.Component {
     e = this;
   }
   render() {
-    var token=null;
-    AsyncStorage.getItem("TOKEN").then((value) => {
-      token:value;
-    })
     return (
       <NavigationContainer>
-        {token == "" ? (
-          <Stack.Navigator>
-            <Stack.Screen
-              name="Login"
-              component={Login}
-              hideNavBar={false}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Main"
-              component={MainTabScreen}
-              options={{ headerShown: false }}
-            />
-          </Stack.Navigator>
-        ) : (
-          <Stack.Navigator>
-            <Stack.Screen
-              name="Main"
-              component={MainTabScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Login"
-              component={Login}
-              hideNavBar={false}
-              options={{ headerShown: false }}
-            />
-          </Stack.Navigator>
-        )}
+        <Stack.Navigator>
+          <Stack.Screen
+            name="LoadingPage"
+            component={LoadingPage}
+            hideNavBar={false}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            hideNavBar={false}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Main"
+            component={MainTabScreen}
+            options={{ headerShown: false }}
+          />
+        </Stack.Navigator>
       </NavigationContainer>
     );
   }

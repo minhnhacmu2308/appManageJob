@@ -28,10 +28,14 @@ class Active extends Component {
       <View>
         <ScrollView showsVerticalScrollIndicator={false}>
           {this.state.listPostActive.map((l, i) => (
-            <ListItem key={i} bottomDivider onPress={() => this.props.onStack(l._id)}>
+            <ListItem
+              key={i}
+              bottomDivider
+              onPress={() => this.props.onStack(l._id)}
+            >
               <Avatar
                 source={{
-                  uri: "https://previews.123rf.com/images/vectorkif/vectorkif1609/vectorkif160900070/65327593-student-girl-flat-style-beautiful-vector-icon-avatar.jpg",
+                  uri: "https://img.lovepik.com/photo/50081/6482.jpg_wh860.jpg",
                 }}
               />
               <ListItem.Content>

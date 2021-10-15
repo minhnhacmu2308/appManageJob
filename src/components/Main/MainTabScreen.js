@@ -26,6 +26,8 @@ import MainViewAccount from "../adminPage/MainViewAccount";
 import MainViewPost from "../adminPage/MainViewPost";
 import Menu from "../Menu/Menu";
 import DetailPostTask from "../adminPage/DetailPostTask";
+import { getListNtdUnActive } from "../../services/api/api";
+import { getListPostUnActive } from "../../services/api/api";
 
 var e;
 const HomeStack = createStackNavigator();
@@ -35,7 +37,19 @@ export default class MainTabScreen extends React.Component {
   constructor(props) {
     super(props);
     e = this;
+    this.state = {
+      numberAccount: 0,
+      numberPost: 0,
+    };
   }
+  componentDidMount = async () => {
+    let numberAccount = await getListNtdUnActive();
+    let numberPost = await getListPostUnActive();
+    this.setState({
+      numberAccount: numberAccount.length,
+      numberPost: numberPost.length,
+    });
+  };
   render() {
     return (
       <Tab.Navigator
@@ -53,6 +67,7 @@ export default class MainTabScreen extends React.Component {
           options={{
             tabBarLabel: "Account",
             tabBarColor: "#faf9f9",
+            tabBarBadge: this.state.numberAccount,
             tabBarIcon: ({ color }) => (
               <Ionicons name="people" size={26} color={color} />
             ),
@@ -64,6 +79,7 @@ export default class MainTabScreen extends React.Component {
           options={{
             tabBarLabel: "Post",
             tabBarColor: "#faf9f9",
+            tabBarBadge: this.state.numberPost,
             tabBarIcon: ({ color }) => (
               <MaterialCommunityIcons
                 name="post-outline"

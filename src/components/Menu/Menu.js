@@ -29,6 +29,8 @@ import { list1, list } from "../../../db/db.js";
 import * as Permissions from "expo-permissions";
 import * as ImagePicker from "expo-image-picker";
 
+import * as Location from "expo-location";
+
 import jwt_decode from "jwt-decode";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -90,7 +92,7 @@ class Menu extends Component {
     );
   };
   openImagePickerAsync = async () => {
-    let permissionResult = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    let permissionResult = await Location.requestForegroundPermissionsAsync();
     if (permissionResult === "granted") {
       return;
     }
