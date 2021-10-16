@@ -101,38 +101,57 @@ class ViewRecruiter extends Component {
             }}
           >
             <View style={styles.enterInformation}>
-              <View style={{ marginTop: 10, marginLeft: 5 }}>
+              <View style={{ marginTop: 10, marginLeft: 5, marginBottom: 10 }}>
                 <Text style={{ fontSize: 20, fontWeight: "bold" }}>
                   Do you want delete?
                 </Text>
               </View>
-
               <View
                 style={{
-                  margin: 20,
-                  marginLeft: 60,
-                  marginRight: 60,
-                  zIndex: 1,
                   flexDirection: "row",
+                  justifyContent: "space-between",
                 }}
               >
-                <View style={{ marginRight: 20 }}>
-                  <Button
-                    title="Cancel"
-                    color="red"
-                    style={{ fontSize: 18 }}
-                    onPress={() => this.setState({ visible: false })}
-                  />
-                </View>
-                <Button
-                  title="Delete"
-                  color="red"
-                  style={{ fontSize: 18 }}
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: "#ffff",
+                    borderWidth: 1,
+                    borderColor: "red",
+                    width: 100,
+                    height: 40,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: 5,
+                    marginRight: 5,
+                  }}
+                  onPress={() => this.setState({ visible: false })}
+                >
+                  <Text
+                    style={{ fontSize: 16, color: "red", fontWeight: "bold" }}
+                  >
+                    Cancel
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: "red",
+                    width: 100,
+                    height: 40,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: 5,
+                  }}
                   onPress={() => {
                     this.deleteAccountNtd();
                     this.setState({ visible: false });
                   }}
-                />
+                >
+                  <Text
+                    style={{ fontSize: 16, color: "white", fontWeight: "bold" }}
+                  >
+                    Delete
+                  </Text>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -180,7 +199,7 @@ class ViewRecruiter extends Component {
                 {l.status == 0 ? (
                   <TouchableOpacity
                     style={{
-                      backgroundColor: "red",
+                      backgroundColor: "#33CC00",
                       height: 25,
                       borderRadius: 5,
                       justifyContent: "center",

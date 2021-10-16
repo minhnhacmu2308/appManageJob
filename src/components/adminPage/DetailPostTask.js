@@ -10,7 +10,12 @@ import {
 } from "react-native";
 import { Header, Image } from "react-native-elements";
 import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
-import { getListPostTaskDetail } from "../../services/api/api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  getListPostTaskDetail,
+  approveForStudent,
+} from "../../services/api/api";
+import { AntDesign } from "@expo/vector-icons";
 
 const { width, height } = Dimensions.get("window");
 
@@ -19,15 +24,41 @@ class DetailPostTask extends Component {
     super(props);
     this.state = {
       info: {},
+      arrApply: [],
+      token: null,
+      idTask: "",
     };
   }
 
   componentDidMount = async () => {
     const id = this.props.route.params.id;
     const information = await getListPostTaskDetail(id);
+    const token = await AsyncStorage.getItem("TOKEN");
+    const arr = [];
+    for (let i = 0; i < information.list_student_apply.length; i++) {
+      arr.push(information.list_student_apply[i]);
+    }
     this.setState({
       info: information,
+      arrApply: arr,
+      token: token,
+      idTask: this.props.route.params.id,
     });
+  };
+  onApprove = async (id, idApply) => {
+    const data = {
+      secret_key: this.state.token,
+      idTask: this.props.route.params.id,
+      idUser: id,
+    };
+
+    let result = await approveForStudent(data);
+    if (result.status == true) {
+      alert("Approve for student success");
+      this.setState({
+        arrApply: this.state.arrApply.filter((d) => d._id !== idApply),
+      });
+    }
   };
   left = () => {
     return (
@@ -60,7 +91,6 @@ class DetailPostTask extends Component {
             style={{
               paddingRight: 10,
               flex: 1,
-              marginBottom: 130,
               backgroundColor: "white",
             }}
           >
@@ -136,13 +166,51 @@ class DetailPostTask extends Component {
                 </Text>
               </View>
             </View>
-
-            {/* <TouchableOpacity
-              onPress={() => this.props.navigation.navigate("Login")}
-              style={styles.btnLogin}
-            >
-              <Text style={styles.textlogin}>LOGOUT</Text>
-            </TouchableOpacity> */}
+          </View>
+          <Text style={styles.fonttext}>Danh sách sinh viên ứng tuyển:</Text>
+          <View
+            style={{
+              width: "100%",
+              padding: 10,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {this.state.arrApply.map((v, index) => {
+              return (
+                <View key={index} style={styles.item}>
+                  <Image
+                    style={styles.image}
+                    source={{
+                      uri: "https://c.neh.tw/thumb/f/720/m2H7H7K9m2Z5G6i8.jpg",
+                    }}
+                  />
+                  <TouchableOpacity
+                    style={{
+                      flexDirection: "column",
+                      marginTop: 20,
+                      marginLeft: 5,
+                      width: 150,
+                    }}
+                  >
+                    <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+                      {v.fullName}
+                    </Text>
+                    <Text style={{ fontWeight: "bold", color: "#aaaaaa" }}>
+                      Nội dung: {v.text}
+                    </Text>
+                  </TouchableOpacity>
+                  <View style={styles.body}>
+                    <TouchableOpacity
+                      style={styles.button}
+                      onPress={() => this.onApprove(v.idStudent, v._id)}
+                    >
+                      <AntDesign name="checkcircle" size={24} color="#33CC00" />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              );
+            })}
           </View>
         </ScrollView>
       </View>
@@ -179,5 +247,42 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     fontSize: 17,
+  },
+  item: {
+    width: "100%",
+    height: 100,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    marginHorizontal: 16,
+    marginVertical: 10,
+    elevation: 3,
+    borderTopColor: "#71B7B7",
+    backgroundColor: "#EEEEEE",
+    zIndex: 1,
+    borderRadius: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  body: {
+    marginLeft: 10,
+    width: 60,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  image: {
+    width: 100,
+    height: 100,
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  button: {
+    height: 50,
+    width: 50,
+    backgroundColor: "#ffff",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: "#33CC00",
+    alignItems: "center",
+    borderRadius: 5,
   },
 });

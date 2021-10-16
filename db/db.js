@@ -11,10 +11,7 @@ export const list = [
     title: "System Setting",
     icon: "settings",
   },
-  {
-    title: "ChangePassword",
-    icon: "sync-alt",
-  },
+ 
 ];
 export const list1 = [
   {

@@ -123,7 +123,7 @@ class UnActive extends Component {
                 </ListItem.Content>
                 <TouchableOpacity
                   style={{
-                    backgroundColor: "red",
+                    backgroundColor: "#33CC00",
                     height: 25,
                     borderRadius: 5,
                     justifyContent: "center",

@@ -66,10 +66,9 @@ class HomeCreate extends Component {
             activeTabStyle={{ backgroundColor: "white" }}
             textStyle={{ color: "black" }}
             activeTextStyle={{ color: "#e60000", fontWeight: "bold" }}
-            heading="Create Admin"
+            heading="Account admin"
           >
-            <CreateAccountAdmin
-            />
+            <CreateAccountAdmin />
           </Tab>
           <Tab
             tabStyle={{ backgroundColor: "white" }}
@@ -78,8 +77,7 @@ class HomeCreate extends Component {
             activeTextStyle={{ color: "#e60000", fontWeight: "bold" }}
             heading="Create Student"
           >
-            <CreateAccountStudent
-            />
+            <CreateAccountStudent />
           </Tab>
         </Tabs>
       </View>

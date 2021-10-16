@@ -68,7 +68,8 @@ export default class MainTabScreen extends React.Component {
           options={{
             tabBarLabel: "Account",
             tabBarColor: "#faf9f9",
-            tabBarBadge: this.state.numberAccount,
+            tabBarBadge:
+              this.state.numberAccount == 0 ? null : this.state.numberAccount,
             tabBarIcon: ({ color }) => (
               <Ionicons name="people" size={26} color={color} />
             ),
@@ -80,7 +81,8 @@ export default class MainTabScreen extends React.Component {
           options={{
             tabBarLabel: "Post",
             tabBarColor: "#faf9f9",
-            tabBarBadge: this.state.numberPost,
+            tabBarBadge:
+              this.state.numberPost == 0 ? null : this.state.numberPost,
             tabBarIcon: ({ color }) => (
               <MaterialCommunityIcons
                 name="post-outline"

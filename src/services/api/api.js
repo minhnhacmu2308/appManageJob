@@ -1,12 +1,19 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-const URL = "http:192.168.1.7:3000";
+const URL = "https://management-job.herokuapp.com";
 
 export const getListStudent = async () => {
   const response = await axios.get(`${URL}/user/get-list-student`);
   const result = response.data.data;
   return result;
 };
+
+export const getListAdmin = async () => {
+  const response = await axios.get(`${URL}/user/get-list-admin`);
+  const result = response.data.data;
+  return result;
+};
+
 export const getInformationStudent = async (id) => {
   const response = await axios.get(`${URL}/user/get-one-sv?id=${id}`);
   const result = response.data.data;
@@ -92,6 +99,16 @@ export const createAccountAdmin = async (data) => {
 
 export const deleteAccount = async (data) => {
   const response = await axios.post(`${URL}/user/delete-account`, data);
+  const result = response.data;
+  return result;
+};
+export const approveForStudent = async (data) => {
+  const response = await axios.post(`${URL}/user/task/approve-for-user`, data);
+  const result = response.data;
+  return result;
+};
+export const changePassword = async (data) => {
+  const response = await axios.post(`${URL}/user/change-password`, data);
   const result = response.data;
   return result;
 };

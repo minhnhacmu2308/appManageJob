@@ -37,7 +37,6 @@ class DetailCompany extends Component {
     this.setState({
       rate: arr,
     });
-    console.log(this.state.rate);
   };
   left = () => {
     return (
@@ -153,7 +152,7 @@ class DetailCompany extends Component {
             </View>
             {this.state.rate.length === 0 ? (
               <>
-                <Text>Chưa có đánh giá nào</Text>
+                <Text style={{ marginLeft: 10 }}>Chưa có đánh giá nào</Text>
               </>
             ) : (
               <>

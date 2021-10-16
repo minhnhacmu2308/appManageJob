@@ -31,6 +31,7 @@ class Login extends Component {
       loginquery: null,
       password: null,
       data: "",
+      notice:""
     };
   }
   showPass = () => {

@@ -7,12 +7,14 @@ import {
   TextInput,
   Dimensions,
   Image,
+  Modal,
 } from "react-native";
 import {
   Header,
   ListItem,
   Avatar,
   SearchBar,
+  Input,
   Icon,
 } from "react-native-elements";
 import { Entypo } from "@expo/vector-icons";
@@ -32,7 +34,11 @@ import * as ImagePicker from "expo-image-picker";
 import jwt_decode from "jwt-decode";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { getInformationStudent, UploadAvatar } from "../../services/api/api";
+import {
+  getInformationStudent,
+  UploadAvatar,
+  changePassword,
+} from "../../services/api/api";
 
 class Menu extends Component {
   constructor(props) {
@@ -44,6 +50,10 @@ class Menu extends Component {
       image: null,
       secret_key: null,
       localUri: null,
+      visible: false,
+      passwordOld: "",
+      passwordNew: "",
+      passwordRe: "",
     };
   }
   componentDidMount = async () => {
@@ -65,6 +75,29 @@ class Menu extends Component {
         }}
       ></View>
     );
+  };
+  onChangePass = async () => {
+    if (this.state.passwordRe !== this.state.passwordNew) {
+      alert("Two passwords do not match");
+    } else if (this.state.passwordNew == "" || this.state.passwordRe == "") {
+      alert("Need to fill in all the information");
+    } else {
+      const data = {
+        secret_key: this.state.secret_key,
+        passwordNew: this.state.passwordNew,
+      };
+      const result = await changePassword(data);
+      if (result.status == true) {
+        alert("ChangePasswod success!!");
+        this.setState({
+          passwordNew: "",
+          passwordRe: "",
+          visible: false,
+        });
+      } else {
+        alert("ChangePasswod failed!!");
+      }
+    }
   };
   left = () => {
     return (
@@ -126,6 +159,88 @@ class Menu extends Component {
           leftComponent={() => this.left()}
           rightComponent={() => this.right()}
         />
+        <Modal transparent={true} visible={this.state.visible}>
+          <View
+            style={{
+              flexDirection: "column",
+              flex: 1,
+              backgroundColor: "#000000aa",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: "#ffff",
+                width: "90%",
+                padding: 10,
+                borderRadius: 5,
+              }}
+            >
+              <View style={{ marginLeft: 8 }}>
+                <Text style={{ fontWeight: "bold" }}>Password new</Text>
+              </View>
+              <Input
+                placeholder="Password New"
+                leftIcon={<Icon name="lock" size={24} color="black" />}
+                onChangeText={(value) => this.setState({ passwordNew: value })}
+                secureTextEntry={true}
+                value={this.state.passwordNew}
+              />
+              <View style={{ marginLeft: 8 }}>
+                <Text style={{ fontWeight: "bold" }}>Re Password new</Text>
+              </View>
+              <Input
+                placeholder="Re Password New"
+                leftIcon={<Icon name="lock" size={24} color="black" />}
+                onChangeText={(value) => this.setState({ passwordRe: value })}
+                secureTextEntry={true}
+                value={this.state.passwordRe}
+              />
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: "red",
+                    width: "48%",
+                    height: 40,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: 5,
+                  }}
+                  onPress={() => this.setState({ visible: false })}
+                >
+                  <Text
+                    style={{ fontSize: 16, color: "white", fontWeight: "bold" }}
+                  >
+                    Cancel
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: "red",
+                    width: "48%",
+                    height: 40,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: 5,
+                  }}
+                  onPress={() => this.onChangePass()}
+                >
+                  <Text
+                    style={{ fontSize: 16, color: "white", fontWeight: "bold" }}
+                  >
+                    Change
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
         <ScrollView>
           <View>
             <TouchableOpacity
@@ -176,6 +291,16 @@ class Menu extends Component {
                 <ListItem.Chevron />
               </ListItem>
             ))}
+            <TouchableOpacity onPress={() => this.setState({ visible: true })}>
+              <ListItem bottomDivider>
+                <Icon name="sync-alt" />
+                <ListItem.Content>
+                  <ListItem.Title>ChangePassword</ListItem.Title>
+                </ListItem.Content>
+                <ListItem.Chevron />
+              </ListItem>
+            </TouchableOpacity>
+
             <Text style={{ fontSize: 20, fontWeight: "bold", margin: 10 }}>
               Dịch Vụ
             </Text>
