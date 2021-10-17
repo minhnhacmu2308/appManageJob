@@ -33,11 +33,30 @@ class DetailPostTask extends Component {
   componentDidMount = async () => {
     const id = this.props.route.params.id;
     const information = await getListPostTaskDetail(id);
+    console.log(id);
     const token = await AsyncStorage.getItem("TOKEN");
     const arr = [];
     for (let i = 0; i < information.list_student_apply.length; i++) {
       arr.push(information.list_student_apply[i]);
     }
+    for (let i = 0; i < arr.length - 1; i++) {
+      for (let j = i + 1; j < arr.length; j++) {
+        if (arr[i].type_of_student > arr[j].type_of_student) {
+          let tmp = arr[i].type_of_student;
+          arr[i].type_of_student = arr[j].type_of_student;
+          arr[j].type_of_student = tmp;
+        } else if (arr[i].type_of_student == arr[j].type_of_student) {
+          if (arr[i].experience < arr[j].experience) {
+            let tmp = arr[i].experience;
+            arr[i].experience = arr[j].experience;
+            arr[j].experience = tmp;
+          }
+        }
+      }
+    }
+    console.log(arr);
+    // arr.sort((a, b) => a.type_of_student < b.type_of_student ? 1:-1);
+    // arr.sort((a, b) => a.experience < b.experience ? 1:-1);
     this.setState({
       info: information,
       arrApply: arr,
@@ -192,12 +211,23 @@ class DetailPostTask extends Component {
                       marginLeft: 5,
                       width: 150,
                     }}
+                    onPress={() =>
+                      this.props.navigation.navigate("Detail1", {
+                        id: v.idStudent,
+                      })
+                    }
                   >
                     <Text style={{ fontWeight: "bold", fontSize: 16 }}>
                       {v.fullName}
                     </Text>
                     <Text style={{ fontWeight: "bold", color: "#aaaaaa" }}>
                       Nội dung: {v.text}
+                    </Text>
+                    <Text style={{ fontWeight: "bold", color: "#aaaaaa" }}>
+                      Khóa: {v.type_of_student}
+                    </Text>
+                    <Text style={{ fontWeight: "bold", color: "#aaaaaa" }}>
+                      Kinh nghiệm: {v.experience} năm
                     </Text>
                   </TouchableOpacity>
                   <View style={styles.body}>
@@ -250,7 +280,7 @@ const styles = StyleSheet.create({
   },
   item: {
     width: "100%",
-    height: 100,
+    height: 120,
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.2,
     marginHorizontal: 16,
@@ -271,7 +301,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 100,
-    height: 100,
+    height: 120,
     borderRadius: 10,
     marginBottom: 20,
   },

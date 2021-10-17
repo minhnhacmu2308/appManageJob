@@ -5,17 +5,20 @@ import {
   View,
   ActivityIndicator,
   TouchableOpacity,
+  Modal,
   ScrollView,
 } from "react-native";
 import { Header, Image } from "react-native-elements";
 import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 import { getInformationStudent } from "../../services/api/api";
+import { Entypo } from "@expo/vector-icons";
 
 class DetailStudent extends Component {
   constructor(props) {
     super(props);
     this.state = {
       info: {},
+      visible: false,
     };
   }
 
@@ -61,8 +64,55 @@ class DetailStudent extends Component {
                 backgroundColor: "red",
                 borderBottomRightRadius: 60,
                 borderBottomLeftRadius: 60,
+                alignItems: "flex-end",
               }}
-            ></View>
+            >
+              {/* {this.state.visible == true ? (
+                <TouchableOpacity
+                  style={{ marginRight: 20 }}
+                  onPress={() => this.setState({ visible: false })}
+                >
+                  <Entypo
+                    name="dots-three-horizontal"
+                    size={24}
+                    color="#ffff"
+                  />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  style={{ marginRight: 20 }}
+                  onPress={() => this.setState({ visible: true })}
+                >
+                  <Entypo
+                    name="dots-three-horizontal"
+                    size={24}
+                    color="#ffff"
+                  />
+                </TouchableOpacity>
+              )} */}
+
+              <Modal transparent={true} visible={this.state.visible}>
+                <View
+                  style={{ alignItems: "flex-end", marginTop: 52, padding: 20 }}
+                >
+                  <View
+                    style={{
+                      width: 100,
+                      height: 100,
+                      backgroundColor: "#ffff",
+                      borderRadius: 5,
+                      alignItems: "center",
+                    }}
+                  >
+                    <TouchableOpacity
+                      style={{ width: 20, height: 20, backgroundColor: "red" }}
+                    >
+                      <Text style={{ color: "#ffff" }}>Delete</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </Modal>
+            </View>
             <View style={{ paddingLeft: 15, paddingRight: 15, marginTop: -80 }}>
               <View
                 style={{
@@ -91,8 +141,8 @@ class DetailStudent extends Component {
                     source={{
                       uri:
                         this.state.info.gender === "male"
-                          ? "https://previews.123rf.com/images/vectorkif/vectorkif1609/vectorkif160900070/65327593-student-girl-flat-style-beautiful-vector-icon-avatar.jpg"
-                          : "https://c.neh.tw/thumb/f/720/m2H7H7K9m2Z5G6i8.jpg",
+                          ? "https://c.neh.tw/thumb/f/720/m2H7H7K9m2Z5G6i8.jpg"
+                          : "https://previews.123rf.com/images/vectorkif/vectorkif1609/vectorkif160900070/65327593-student-girl-flat-style-beautiful-vector-icon-avatar.jpg",
                     }}
                     style={{ width: 120, height: 120, borderRadius: 100 }}
                     PlaceholderContent={<ActivityIndicator />}
@@ -265,7 +315,7 @@ class DetailStudent extends Component {
                       </Text>
                       <Text style={{ width: "50%", fontSize: 16 }}>
                         {" "}
-                        {this.state.info.phonenumber}
+                        (+ 84) {this.state.info.phonenumber}
                       </Text>
                     </View>
                     <View

@@ -85,7 +85,7 @@ class ViewInformationStudent extends Component {
                     backgroundColor: "#ffff",
                     borderWidth: 1,
                     borderColor: "red",
-                    width: 100,
+                    width: "48%",
                     height: 40,
                     justifyContent: "center",
                     alignItems: "center",
@@ -103,7 +103,7 @@ class ViewInformationStudent extends Component {
                 <TouchableOpacity
                   style={{
                     backgroundColor: "red",
-                    width: 100,
+                    width: "48%",
                     height: 40,
                     justifyContent: "center",
                     alignItems: "center",

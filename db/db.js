@@ -1,9 +1,5 @@
 export const list = [
   {
-    title: "Thông báo",
-    icon: "notifications",
-  },
-  {
     title: "Danh sách quan tâm",
     icon: "list",
   },
@@ -11,7 +7,6 @@ export const list = [
     title: "System Setting",
     icon: "settings",
   },
- 
 ];
 export const list1 = [
   {

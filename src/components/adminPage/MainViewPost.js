@@ -69,9 +69,12 @@ class MainViewPost extends Component {
             activeTextStyle={{ color: "#e60000", fontWeight: "bold" }}
             heading="Active"
           >
-            <Active 
-            onStack={(id) =>
+            <Active
+              onStack={(id) =>
                 this.props.navigation.navigate("DetailPostTask", { id: id })
+              }
+              onStack1={(id) =>
+                this.props.navigation.navigate("Detail1", { id: id })
               }
             />
           </Tab>
@@ -82,7 +85,7 @@ class MainViewPost extends Component {
             activeTextStyle={{ color: "#e60000", fontWeight: "bold" }}
             heading="UnActive"
           >
-            <UnActive 
+            <UnActive
               onStack={(id) =>
                 this.props.navigation.navigate("DetailPostTask", { id: id })
               }

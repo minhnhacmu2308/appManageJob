@@ -38,6 +38,7 @@ import {
   getInformationStudent,
   UploadAvatar,
   changePassword,
+  getNotice,
 } from "../../services/api/api";
 
 class Menu extends Component {
@@ -54,6 +55,7 @@ class Menu extends Component {
       passwordOld: "",
       passwordNew: "",
       passwordRe: "",
+      listNotice: [],
     };
   }
   componentDidMount = async () => {
@@ -205,7 +207,9 @@ class Menu extends Component {
               >
                 <TouchableOpacity
                   style={{
-                    backgroundColor: "red",
+                    backgroundColor: "#ffff",
+                    borderWidth: 1,
+                    borderColor: "red",
                     width: "48%",
                     height: 40,
                     justifyContent: "center",
@@ -215,7 +219,7 @@ class Menu extends Component {
                   onPress={() => this.setState({ visible: false })}
                 >
                   <Text
-                    style={{ fontSize: 16, color: "white", fontWeight: "bold" }}
+                    style={{ fontSize: 16, color: "red", fontWeight: "bold" }}
                   >
                     Cancel
                   </Text>
@@ -282,6 +286,17 @@ class Menu extends Component {
             <Text style={{ fontSize: 20, fontWeight: "bold", margin: 10 }}>
               Cá Nhân
             </Text>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate("ListNotice")}
+            >
+              <ListItem bottomDivider>
+                <Icon name="notifications" />
+                <ListItem.Content>
+                  <ListItem.Title>Thông báo</ListItem.Title>
+                </ListItem.Content>
+                <ListItem.Chevron />
+              </ListItem>
+            </TouchableOpacity>
             {this.state.data.map((item, i) => (
               <ListItem key={i} bottomDivider>
                 <Icon name={item.icon} />
@@ -291,6 +306,7 @@ class Menu extends Component {
                 <ListItem.Chevron />
               </ListItem>
             ))}
+
             <TouchableOpacity onPress={() => this.setState({ visible: true })}>
               <ListItem bottomDivider>
                 <Icon name="sync-alt" />
