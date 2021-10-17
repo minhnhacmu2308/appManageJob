@@ -8,7 +8,7 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
-import { Header, Image } from "react-native-elements";
+import { Header, Image, CheckBox } from "react-native-elements";
 import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
@@ -25,8 +25,11 @@ class DetailPostTask extends Component {
     this.state = {
       info: {},
       arrApply: [],
+      arrEx: [],
       token: null,
       idTask: "",
+      checked: true,
+      checked1: false,
     };
   }
 
@@ -36,30 +39,45 @@ class DetailPostTask extends Component {
     console.log(id);
     const token = await AsyncStorage.getItem("TOKEN");
     const arr = [];
+    const arr1 = [];
     for (let i = 0; i < information.list_student_apply.length; i++) {
       arr.push(information.list_student_apply[i]);
+    }
+    for (let i = 0; i < information.list_student_apply.length; i++) {
+      arr1.push(information.list_student_apply[i]);
     }
     for (let i = 0; i < arr.length - 1; i++) {
       for (let j = i + 1; j < arr.length; j++) {
         if (arr[i].type_of_student > arr[j].type_of_student) {
-          let tmp = arr[i].type_of_student;
-          arr[i].type_of_student = arr[j].type_of_student;
-          arr[j].type_of_student = tmp;
-        } else if (arr[i].type_of_student == arr[j].type_of_student) {
-          if (arr[i].experience < arr[j].experience) {
-            let tmp = arr[i].experience;
-            arr[i].experience = arr[j].experience;
-            arr[j].experience = tmp;
-          }
+          let tmp = arr[i];
+          arr[i] = arr[j];
+          arr[j] = tmp;
         }
       }
     }
+    for (let i = 0; i < arr1.length - 1; i++) {
+      for (let j = i + 1; j < arr1.length; j++) {
+        if (arr1[i].experience < arr1[j].experience) {
+          let tmp = arr1[i];
+          arr1[i] = arr1[j];
+          arr1[j] = tmp;
+        }
+      }
+    }
+    // else if (arr[i].type_of_student == arr[j].type_of_student) {
+    //       if (arr[i].experience < arr[j].experience) {
+    //         let tmp = arr[i].experience;
+    //         arr[i].experience = arr[j].experience;
+    //         arr[j].experience = tmp;
+    //       }
+    //     }
     console.log(arr);
     // arr.sort((a, b) => a.type_of_student < b.type_of_student ? 1:-1);
     // arr.sort((a, b) => a.experience < b.experience ? 1:-1);
     this.setState({
       info: information,
       arrApply: arr,
+      arrEx: arr1,
       token: token,
       idTask: this.props.route.params.id,
     });
@@ -76,6 +94,7 @@ class DetailPostTask extends Component {
       alert("Approve for student success");
       this.setState({
         arrApply: this.state.arrApply.filter((d) => d._id !== idApply),
+        arrEx: this.state.arrEx.filter((d) => d._id !== idApply),
       });
     }
   };
@@ -93,6 +112,22 @@ class DetailPostTask extends Component {
         />
       </TouchableOpacity>
     );
+  };
+  onChange = () => {
+    if (this.state.checked1 == true) {
+      this.setState({
+        checked: true,
+        checked1: false,
+      });
+    }
+  };
+  onChange1 = () => {
+    if (this.state.checked == true) {
+      this.setState({
+        checked1: true,
+        checked: false,
+      });
+    }
   };
   render() {
     return (
@@ -189,58 +224,138 @@ class DetailPostTask extends Component {
           <Text style={styles.fonttext}>Danh sách sinh viên ứng tuyển:</Text>
           <View
             style={{
+              flexDirection: "row",
+              alignItems: "center",
+              width: "100%",
+            }}
+          >
+            <CheckBox
+              title="Type of school"
+              checkedColor="#33CC00"
+              onPress={() => this.onChange()}
+              checked={this.state.checked}
+            />
+
+            <CheckBox
+              center
+              title="Experience"
+              checkedColor="#33CC00"
+              onPress={() => this.onChange1()}
+              checked={this.state.checked1}
+            />
+          </View>
+          <View
+            style={{
               width: "100%",
               padding: 10,
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            {this.state.arrApply.map((v, index) => {
-              return (
-                <View key={index} style={styles.item}>
-                  <Image
-                    style={styles.image}
-                    source={{
-                      uri: "https://c.neh.tw/thumb/f/720/m2H7H7K9m2Z5G6i8.jpg",
-                    }}
-                  />
-                  <TouchableOpacity
-                    style={{
-                      flexDirection: "column",
-                      marginTop: 20,
-                      marginLeft: 5,
-                      width: 150,
-                    }}
-                    onPress={() =>
-                      this.props.navigation.navigate("Detail1", {
-                        id: v.idStudent,
-                      })
-                    }
-                  >
-                    <Text style={{ fontWeight: "bold", fontSize: 16 }}>
-                      {v.fullName}
-                    </Text>
-                    <Text style={{ fontWeight: "bold", color: "#aaaaaa" }}>
-                      Nội dung: {v.text}
-                    </Text>
-                    <Text style={{ fontWeight: "bold", color: "#aaaaaa" }}>
-                      Khóa: {v.type_of_student}
-                    </Text>
-                    <Text style={{ fontWeight: "bold", color: "#aaaaaa" }}>
-                      Kinh nghiệm: {v.experience} năm
-                    </Text>
-                  </TouchableOpacity>
-                  <View style={styles.body}>
-                    <TouchableOpacity
-                      style={styles.button}
-                      onPress={() => this.onApprove(v.idStudent, v._id)}
-                    >
-                      <AntDesign name="checkcircle" size={24} color="#33CC00" />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              );
-            })}
+            {this.state.checked == true
+              ? this.state.arrApply.map((v, index) => {
+                  return (
+                    <View key={index} style={styles.item}>
+                      <Image
+                        style={styles.image}
+                        source={{
+                          uri: "https://c.neh.tw/thumb/f/720/m2H7H7K9m2Z5G6i8.jpg",
+                        }}
+                      />
+                      <TouchableOpacity
+                        style={{
+                          flexDirection: "column",
+                          marginTop: 20,
+                          marginLeft: 5,
+                          width: 150,
+                        }}
+                        onPress={() =>
+                          this.props.navigation.navigate("Detail1", {
+                            id: v.idStudent,
+                          })
+                        }
+                      >
+                        <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+                          {v.fullName}
+                        </Text>
+                        <Text style={{ fontWeight: "bold", color: "#aaaaaa" }}>
+                          Nội dung: {v.text}
+                        </Text>
+                        <Text style={{ fontWeight: "bold", color: "#aaaaaa" }}>
+                          Khóa: {v.type_of_student}
+                        </Text>
+                        <Text style={{ fontWeight: "bold", color: "#aaaaaa" }}>
+                          Kinh nghiệm: {v.experience} năm
+                        </Text>
+                      </TouchableOpacity>
+                      <View style={styles.body}>
+                        <TouchableOpacity
+                          style={styles.button}
+                          onPress={() => this.onApprove(v.idStudent, v._id)}
+                        >
+                          <AntDesign
+                            name="checkcircle"
+                            size={24}
+                            color="#33CC00"
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  );
+                })
+              : null}
+            {this.state.checked1 == true
+              ? this.state.arrEx.map((v, index) => {
+                  return (
+                    <View key={index} style={styles.item}>
+                      <Image
+                        style={styles.image}
+                        source={{
+                          uri: "https://c.neh.tw/thumb/f/720/m2H7H7K9m2Z5G6i8.jpg",
+                        }}
+                      />
+                      <TouchableOpacity
+                        style={{
+                          flexDirection: "column",
+                          marginTop: 20,
+                          marginLeft: 5,
+                          width: 150,
+                        }}
+                        onPress={() =>
+                          this.props.navigation.navigate("Detail1", {
+                            id: v.idStudent,
+                          })
+                        }
+                      >
+                        <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+                          {v.fullName}
+                        </Text>
+                        <Text style={{ fontWeight: "bold", color: "#aaaaaa" }}>
+                          Nội dung: {v.text}
+                        </Text>
+                        <Text style={{ fontWeight: "bold", color: "#aaaaaa" }}>
+                          Khóa: {v.type_of_student}
+                        </Text>
+                        <Text style={{ fontWeight: "bold", color: "#aaaaaa" }}>
+                          Kinh nghiệm: {v.experience} năm
+                        </Text>
+                      </TouchableOpacity>
+                      <View style={styles.body}>
+                        <TouchableOpacity
+                          style={styles.button}
+                          onPress={() => this.onApprove(v.idStudent, v._id)}
+                        >
+                          <AntDesign
+                            name="checkcircle"
+                            size={24}
+                            color="#33CC00"
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  );
+                })
+              : null}
           </View>
         </ScrollView>
       </View>

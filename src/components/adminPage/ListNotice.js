@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   Modal,
+  RefreshControl,
   ScrollView,
 } from "react-native";
 import { Header, Image } from "react-native-elements";
@@ -25,6 +26,7 @@ class ListNotice extends Component {
     super(props);
     this.state = {
       listNotice: [],
+      refreshing: false,
     };
   }
   componentDidMount = async () => {
@@ -33,7 +35,12 @@ class ListNotice extends Component {
     this.setState({ secret_key: token });
     const response = await getInformationStudent(decode._id);
     this.setState({ listNotice: response.notice });
-    console.log(response.notice);
+  };
+  _onRefresh = async () => {
+    const token = await AsyncStorage.getItem("TOKEN");
+    const decode = jwt_decode(token);
+    const response = await getInformationStudent(decode._id);
+    this.setState({ listNotice: response.notice });
   };
   left = () => {
     return (
@@ -55,25 +62,35 @@ class ListNotice extends Component {
       <View>
         <Header
           centerComponent={{
-            text: "CV Student",
+            text: "Thông báo",
             style: { color: "red", fontWeight: "bold" },
           }}
           leftComponent={() => this.left()}
           backgroundColor="#ffff"
         />
-        {this.state.listNotice.map((item, i) => (
-          <ListItem key={i} bottomDivider>
-            <Avatar
-              source={{
-                uri: "https://previews.123rf.com/images/vectorkif/vectorkif1609/vectorkif160900070/65327593-student-girl-flat-style-beautiful-vector-icon-avatar.jpg",
-              }}
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={() => this._onRefresh()}
             />
-            <ListItem.Content>
-              <ListItem.Title>{item.idCompany}</ListItem.Title>
-            </ListItem.Content>
-            <ListItem.Chevron />
-          </ListItem>
-        ))}
+          }
+        >
+          {this.state.listNotice.reverse().map((item, i) => (
+            <ListItem key={i} bottomDivider>
+              <Avatar
+                source={{
+                  uri: "https://png.pngtree.com/png-vector/20190321/ourlarge/pngtree-vector-announcement-icon-png-image_856893.jpg",
+                }}
+              />
+              <ListItem.Content>
+                <ListItem.Title>Thông báo</ListItem.Title>
+                <ListItem.Subtitle>{item.mes}</ListItem.Subtitle>
+              </ListItem.Content>
+              <ListItem.Chevron />
+            </ListItem>
+          ))}
+        </ScrollView>
       </View>
     );
   }
